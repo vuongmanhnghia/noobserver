@@ -1,0 +1,37 @@
+---
+- name: Check cert existence
+  ansible.builtin.stat:
+    path: "/etc/letsencrypt/live/{{ item.domains[0] }}/fullchain.pem"
+  loop: "{{ certbot_certs }}"
+  register: cert_checks
+
+- name: Debug cert status
+  ansible.builtin.debug:
+    msg: "Cert for {{ item.item.domains[0] }} exists: {{ item.stat.exists }}"
+  loop: "{{ cert_checks.results }}"
+
+- name: Stop Nginx if running (to free port 80 for standalone mode)
+  ansible.builtin.service:
+    name: nginx
+    state: stopped
+  ignore_errors: true
+  when: cert_checks.results | selectattr('stat.exists', 'equalto', false) | list | length > 0
+
+- name: Obtain SSL certificate with Certbot Standalone
+  ansible.builtin.command: >
+    certbot certonly --standalone
+    --non-interactive
+    --agree-tos
+    --email {{ certbot_admin_email }}
+    -d {{ item.item.domains | join(' -d ') }}
+  loop: "{{ cert_checks.results }}"
+  when: not item.stat.exists
+  register: certbot_result
+  changed_when: certbot_result.rc == 0
+
+- name: Start Nginx after obtaining certificates
+  ansible.builtin.service:
+    name: nginx
+    state: started
+  ignore_errors: true
+  when: cert_checks.results | selectattr('stat.exists', 'equalto', false) | list | length > 0

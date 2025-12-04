@@ -1,0 +1,22 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Tạo user ansible
+      ansible.builtin.user:
+        name: ansible
+        groups: sudo
+        shell: /bin/bash
+        append: yes
+
+    - name: Đẩy SSH Key vào
+      ansible.builtin.authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+
+    - name: Configure passwordless sudo for ansible user
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/ansible
+        content: "ansible ALL=(ALL) NOPASSWD: ALL"
+        mode: 0440
+        validate: 'visudo -cf %s'

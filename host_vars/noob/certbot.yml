@@ -1,0 +1,15 @@
+---
+# Certbot
+certbot_auto_renew: true
+certbot_auto_renew_user: "root"
+certbot_auto_renew_hour: "3"
+certbot_auto_renew_minute: "30"
+certbot_admin_email: "nooblearn2code@gmail.com"
+certbot_create_if_missing: true
+certbot_create_method: standalone
+certbot_certs:
+    - domains:
+        - "{{ gitlab_domain }}"
+    - domains:
+        - "nooblearn2code.com"
+        - "www.nooblearn2code.com"

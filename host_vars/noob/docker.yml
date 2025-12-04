@@ -1,0 +1,6 @@
+---
+docker_network: "app_network"
+data_root: "/opt/shared_data"
+docker_users:
+      - "{{ ansible_user }}"
+      - "nagih"

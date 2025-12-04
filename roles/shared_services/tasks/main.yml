@@ -1,0 +1,59 @@
+---
+- name: Create shared Docker Network
+  community.docker.docker_network:
+    name: "{{ docker_network }}"
+    driver: bridge
+    state: present
+
+- name: Start Redis Container
+  community.docker.docker_container:
+    name: redis
+    image: "redis:8-alpine"
+    state: started
+    restart_policy: always
+    ports:
+      - "127.0.0.1:{{ redis_port }}:6379"
+    env:
+      REDIS_PASSWORD: "{{ redis_password }}"
+    volumes:
+      - "{{ data_root }}/redis/data:/data"
+    command: ["redis-server", "--requirepass", "{{ redis_password }}", "--appendonly", "yes"]
+    networks:
+      - name: "{{ docker_network }}"
+
+- name: Start PostgreSQL Container
+  community.docker.docker_container:
+    name: postgres
+    image: "postgres:18-alpine"
+    state: started
+    restart_policy: always
+    ports:
+      - "127.0.0.1:{{ postgres_port }}:5432"
+    env:
+      POSTGRES_USER: "{{ postgres_root_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_root_password }}"
+    volumes:
+      - "{{ data_root }}/postgres/data:/var/lib/postgresql/data"
+    networks:
+      - name: "{{ docker_network }}"
+
+- name: Create PostgreSQL Databases
+  community.postgresql.postgresql_db:
+    name: "{{ item.name }}"
+    login_host: "127.0.0.1"
+    login_user: "{{ postgres_root_user }}"
+    login_password: "{{ postgres_root_password }}"
+    state: present
+  loop: "{{ postgres_databases }}"
+
+- name: Create Application Users for PostgreSQL Databases
+  community.postgresql.postgresql_user:
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    db: "{{ item.name }}"
+    priv: "ALL"
+    login_host: "127.0.0.1"
+    login_user: "{{ postgres_root_user }}"
+    login_password: "{{ postgres_root_password }}"
+    state: present
+  loop: "{{ postgres_databases }}"

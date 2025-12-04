@@ -1,0 +1,16 @@
+---
+postgres_root_user: "noob"
+postgres_root_password: "nooblearn2code_postgres_pass"
+postgres_port: 5432
+
+# Databases
+postgres_databases:
+  # GitLab
+  - name: "gitlab"
+    user: "gitlab"
+    password: "gitlab_db_pass"
+    
+  # EthnoSoul Legacy
+  - name: "esl"
+    user: "esl"
+    password: "esl_db_pass"

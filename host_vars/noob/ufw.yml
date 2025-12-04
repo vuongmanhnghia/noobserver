@@ -1,0 +1,7 @@
+---
+ufw_app_ports:
+  - "{{ nginx_http_port }}"
+  - "{{ nginx_https_port }}"
+  - 22
+  - 81
+  - 5432

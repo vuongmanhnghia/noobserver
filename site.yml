@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - geerlingguy.security
+
+- hosts: noob
+  become: true
+  roles:
+    - geerlingguy.security
+    - ufw
+    - geerlingguy.certbot  # Tạo certificate TRƯỚC
+    - certbot
+    - geerlingguy.nginx    # Cấu hình Nginx SAU khi có certificate
+    - docker
+    - shared_services
+

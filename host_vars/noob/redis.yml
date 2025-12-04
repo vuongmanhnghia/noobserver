@@ -1,0 +1,3 @@
+---
+redis_password: "nooblearn2code_redis_pass"
+redis_port: 6379

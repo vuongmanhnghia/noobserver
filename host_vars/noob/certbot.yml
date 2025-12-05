@@ -17,3 +17,5 @@ certbot_certs:
         - "ethnosoul-legacy.vn"
     - domains:
         - "api.ethnosoul-legacy.vn"
+    - domains:
+        - "api-community-alert.nooblearn2code.io.vn"

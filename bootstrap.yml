@@ -1,5 +1,7 @@
 - hosts: all
   become: true
+  vars:
+    ansible_user: nagih
   tasks:
     - name: Tạo user ansible
       ansible.builtin.user:

@@ -13,3 +13,7 @@ certbot_certs:
     - domains:
         - "nooblearn2code.com"
         - "www.nooblearn2code.com"
+    - domains:
+        - "ethnosoul-legacy.vn"
+    - domains:
+        - "api.ethnosoul-legacy.vn"

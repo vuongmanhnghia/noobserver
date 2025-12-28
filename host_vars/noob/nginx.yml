@@ -6,7 +6,7 @@ nginx_vhost_path: /etc/nginx/sites-available
 nginx_remove_default_vhost: true
 
 nginx_vhosts:
-  # --- GITLAB ---
+  # === GITLAB ===
   - listen: "80"
     server_name: "{{ gitlab_domain }}"
     return: "301 https://$host$request_uri"
@@ -45,7 +45,7 @@ nginx_vhosts:
   #     ssl_certificate_key /etc/letsencrypt/live/nooblearn2code.com/privkey.pem;
   #   filename: "main-site-ssl.conf"
 
-  # --- ETHNOSOUL LEGACY ---
+  # === ETHNOSOUL LEGACY ===
   - listen: "80"
     server_name: "ethnosoul-legacy.vn"
     return: "301 https://$host$request_uri"
@@ -90,25 +90,25 @@ nginx_vhosts:
       }
     filename: "api.ethnosoul-legacy.vn-ssl.conf"
 
-  # --- API COMMUNITY ALERT ---
+  # === MINECRAFT SERVER PROXY ===
   - listen: "80"
-    server_name: "api.ethnosoul-legacy.vn"
+    server_name: "minecraft.nooblearn2code.com"
     return: "301 https://$host$request_uri"
-    filename: "api-community-alert.nooblearn2code.io.vn.conf"
-    
+    filename: "minecraft.nooblearn2code.com.conf"
+
   - listen: "443 ssl"
-    server_name: "api-community-alert.nooblearn2code.io.vn"
+    server_name: "minecraft.nooblearn2code.com"
     extra_parameters: |
-      ssl_certificate /etc/letsencrypt/live/api-community-alert.nooblearn2code.io.vn/fullchain.pem;
-      ssl_certificate_key /etc/letsencrypt/live/api-community-alert.nooblearn2code.io.vn/privkey.pem;
+      ssl_certificate /etc/letsencrypt/live/minecraft.nooblearn2code.com/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/minecraft.nooblearn2code.com/privkey.pem;
       ssl_protocols TLSv1.2 TLSv1.3;
       ssl_ciphers HIGH:!aNULL:!MD5;
 
       location / {
-        proxy_pass http://localhost:8082;
+        proxy_pass http://localhost:25565;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
       }
-    filename: "api-community-alert.nooblearn2code.io.vn-ssl.conf"
+    filename: "minecraft.nooblearn2code.com-ssl.conf"

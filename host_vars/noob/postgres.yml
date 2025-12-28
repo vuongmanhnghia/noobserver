@@ -19,3 +19,8 @@ postgres_databases:
   - name: "community_alert"
     user: "community_alert"
     password: "community_alert_db_pass"
+
+  # Music Bot
+  - name: "music_bot"
+    user: "music_bot"
+    password: "music_bot_db_pass"

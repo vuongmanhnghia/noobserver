@@ -12,13 +12,13 @@
       tags: ufw
 
     - role: geerlingguy.certbot
-      tags: certbot
+      tags: certbot, domain
 
     - role: certbot
-      tags: certbot
+      tags: certbot, domain
 
     - role: geerlingguy.nginx
-      tags: nginx
+      tags: nginx, domain
 
     - role: docker
       tags: docker

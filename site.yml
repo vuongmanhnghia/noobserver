@@ -26,3 +26,9 @@
     - role: shared_services
       tags: app
 
+- hosts: rpi
+  become: true
+  roles:
+    - role: shared_services
+      tags: app
+

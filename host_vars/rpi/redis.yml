@@ -1,0 +1,3 @@
+---
+redis_password: "admin_redis_pass"
+redis_port: 6379

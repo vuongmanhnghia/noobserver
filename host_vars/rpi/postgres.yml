@@ -1,0 +1,11 @@
+---
+postgres_root_user: "admin"
+postgres_root_password: "admin_postgres_pass"
+postgres_port: 5432
+
+# Databases
+postgres_databases:
+  # Music Bot
+  - name: "music_bot"
+    user: "music_bot"
+    password: "music_bot_db_pass"

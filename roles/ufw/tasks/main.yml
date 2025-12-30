@@ -23,6 +23,8 @@
     port: "{{ item }}"
     proto: tcp
   loop: "{{ (ufw_allowed_ports | default([])) | union(ufw_app_ports | default([])) | unique }}"
+  tags:
+    - firewall
 
 - name: Ensure UFW service is started and enabled
   ansible.builtin.service:

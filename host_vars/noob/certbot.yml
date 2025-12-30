@@ -17,7 +17,10 @@ certbot_certs:
         - "ethnosoul-legacy.vn"
     - domains:
         - "api.ethnosoul-legacy.vn"
-    # - domains:
-    #     - "blog.nooblearn2code.com"
+    - domains:
+        - "blog.nooblearn2code.com"
     - domains:
         - "minecraft.nooblearn2code.com"
+    - domains:
+        - "portainer.nooblearn2code.com"
+    
